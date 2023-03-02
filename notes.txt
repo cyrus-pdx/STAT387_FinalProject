@@ -1,0 +1,6 @@
+Potential questions:
+    - After changing `ShellType` to being numeric, could it be a better response?
+    - Are there any clusters that could potentially provide any additional insight?
+    - Does the data contain an equal amount of `Type1` and `Type2` records?
+    - What could be a cause for corelation between the different variables?
+    -
