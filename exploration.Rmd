@@ -74,18 +74,87 @@ snails
 ```
 
 ```{r}
+colSums(is.na(snails))
+```
+
+**NOTE:** There is are no `NA` values
+
+```{r}
 unique(snails$ShellType)
 ```
 
+**NOTE:** There is a categorical variable with records that are either `Type1` or `Type2`.
+
+```{r}
+snails %>% 
+  group_by(ShellType) %>% 
+  count(ShellType) %>% 
+  rename(Totals = n)
+```
+**NOTE:** There are significantly more `Type2` than `Type1` shells. This could potentially cause the data to be biased towards `Type2` shell types.
 
 ```{r}
 summary(snails)
 ```
 
+**NOTE:** `Length` values range from 9.63 to 18.39, Q1 = 12.88 $\mu$ = 13.94, Median = 13.79, Q3 = 14.96
+
+```{r}
+snails1 <- snails %>% filter(ShellType == "Type1")
+summary(snails1)
+```
+
+```{r}
+snails2 <- snails %>% filter(ShellType == "Type2")
+summary(snails2)
+```
+
+**NOTE:** `snail2` MIN and MAX for the `Length` variable are closer to the mean and median, which might suggest less outliers. 
+
+```{r}
+# Finding the standard deviation for the snails Length variable 
+sd(snails$Length)
+
+# Finding the standard deviation for the snails1 Length variable 
+sd(snails1$Length)
+
+# Finding the standard deviation for the snails2 Length variable 
+sd(snails2$Length)
+```
+
+```{r}
+# Finding the standard deviation for the snails Length variable 
+var(snails$Length)
+
+# Finding the standard deviation for the snails1 Length variable 
+var(snails1$Length)
+
+# Finding the standard deviation for the snails2 Length variable 
+var(snails2$Length)
+```
+
+**NOTE:** $\sigma^{2}$ for `snail2` `Length` variable are smaller. 
+
+```{r}
+ggplot(snails) + 
+  geom_point(aes(x=1:nrow(snails), y=Length, colour = ShellType))
+```
+
+```{r}
+ggplot(snails1) + 
+  geom_point(aes(x=1:nrow(snails1), y=Length, colour = ShellType))
+```
+
+```{r}
+ggplot(snails2) + 
+  geom_point(aes(x=1:nrow(snails2), y=Length))
+```
+
+**OBSERVATIONS: ** It might be beneficial to break the 
+
 ```{r}
 pairs(snails[,-1])
 ```
-
 
 ```{r}
 corrplot(cor(snails[,-1]), method="square")
@@ -95,12 +164,28 @@ corrplot(cor(snails[,-1]), method="square")
 boxplot(snails[,-1])
 ```
 
+```{r}
+snails_new <- snails %>% 
+  mutate(Type = ifelse(ShellType == "Type1", 1 , 2)) %>% 
+  relocate(Type, .after = ShellType)
+snails_new
+```
 
+```{r}
+pairs(snails_new[,-1])
+```
+
+```{r}
+corrplot(cor(snails_new[,-1]), method="square")
+```
+
+```{r}
+boxplot(snails_new[,-1])
+```
 
 ```{r}
 view(snails)
 ```
-
 
 ### Question c)
 ```{r}
@@ -110,6 +195,7 @@ lmod_3 <- lm(Length ~ AperHt, snails)
 lmod_4 <- lm(Length ~ AperWdt, snails)
 lmod_5 <- lm(Length ~ LU, snails)
 lmod_6 <- lm(Length ~ LipWdt, snails)
+lmod_7 <- lm(Length ~ Type, snails_new)
 ```
 
 ```{r}
@@ -154,7 +240,13 @@ summary(lmod_6)
 ```{r}
 plot(lmod_6)
 ```
+```{r}
+summary(lmod_7)
+```
 
+```{r}
+plot(lmod_7)
+```
 
 ### Question d)
 
@@ -164,7 +256,7 @@ summary(lmod_length)
 ```
 
 ```{r}
-lmod_width <- lm(Width ~ ., snails )
+lmod_width <- lm(Width ~ ., snails)
 summary(lmod_width)
 ```
 
