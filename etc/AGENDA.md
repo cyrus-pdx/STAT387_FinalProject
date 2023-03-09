@@ -3,13 +3,6 @@
 ## File Organization 
 .
 └── STAT387_FinalProject
-    ├── data/
-    │   ├── raw
-    │   │   ├── snail.csv
-    │   └── processed
-    │       ├── snail.RData
-    │       ├── snail1.RData
-    │       └── snail2.RData
     ├── etc/
     │   ├── AGENDA.md
     │   ├── Johnston_and_Cohen_1986_Palaios.pdf
@@ -17,12 +10,23 @@
     │   ├── Project-2.pdf
     │   ├── variable_definitions.png
     │   └── variable_definitions2.png
-    ├── outputs/
-    │   ├── figures/
-    │   ├── FinalPaper.Rmd
-    │   ├── FinalPresentation
-    │   └── plots/
     ├── src/
+    │   ├── data/
+    │   │   ├── raw
+    │   │   │   ├── snail.csv
+    │   │   └── processed
+    │   │       ├── snail.RData
+    │   │       ├── snail1.RData
+    │   │       └── snail2.RData
+    │   ├── exploration.Rmd
+    │   ├── exp_snails1.Rmd
+    │   ├── exp_snails2.Rmd
+    │   ├── FinalPaper.Rmd
+    │   └── outputs/
+    │       ├── figures/
+    │       ├── FinalPaper.Rmd
+    │       ├── FinalPresentation
+    │       └── plots/
     ├── README.md
     └── .gitignore
 
