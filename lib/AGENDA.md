@@ -1,7 +1,7 @@
 # Project Agenda Outline:
 
 ## File Organization 
-h1 align="center"> Endemic Gastropods Data Analysis </h1>
+<h1 align="center"> Endemic Gastropods Data Analysis </h1>
 
 ```
  📦STAT387_FinalProject      
