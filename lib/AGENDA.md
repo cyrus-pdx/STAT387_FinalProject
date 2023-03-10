@@ -1,6 +1,7 @@
-<h1 align="center"> Endemic Gastropods Data Analysis </h1>
+# Project Agenda Outline:
 
 ## File Organization 
+<h1 align="center"> Endemic Gastropods Data Analysis </h1>
 
 ```
  📦STAT387_FinalProject      
@@ -31,35 +32,33 @@
  ┣ 📄.gitignore                                 
  ┗ 📄README.md
 ```
-## Preamble:
-Consider the snail data available in the `Snail2.csv`. Take Length as the response variable and we would like to understand how it is related with other variables in the data.
+---
 
-## Problem statements:
+### Project Agenda:
+- [x] Format the project to match File Organization.
+- [x] Establish timeline.
+- [ ] Finish exploratory data analysis. (🛠️ in progress...).
+- [ ] Create Models.
+- [ ] Create `entireCode.R` script file.
+- [ ] Create visualizations.
+- [ ] Create presentation.
+- [ ] Write paper.
 
-<ol type="a">
-  <li> Perform an exploratory analysis of data.</li>
-  
-  <li> Is Length appropriate as a response variable or a transformation is necessary? In case a transformation of response is necessary, try the natural log transformation or some other simple transformation and use it for the rest of this problem. </li>
-  
-  <li> Do part (a) of Exercise 15 in Chapter 3 for these data. </li>
-  
-  <li> Do part (b) of Exercise 15 in Chapter 3 for these data. </li>
-  
-  <li> Build a reasonably “good” multiple regression model for these data. Be sure to explore interactions of ShellType with other predictors. Carefully justify all the choices you make in building the model and verify the model assumptions. </li>
-  
-  <li> Write the final model in equation form, being careful to handle qualitative predictors and interactions (if any) properly.</li>
-  
-  <li> Use the final model to predict the Length of a Type1 snail with other predictors set equal to their sample means. Also provide a 95% prediction interval for the response and a 95% confidence interval for the mean response. Repeat for a Type2 snail, and compare the answers. </li>
-</ol>
+---
 
-## Data Variables:
+cyrus-pdx:
+- [x] Create base grid
+- [x] Find distances from AP's to receiver locations
+- [ ] Finish exploratory data analysis. (🛠️ in progress...)
+- [ ] Create Models.
+- [ ] Create `entireCode.R` script file.
+- [ ] Create visualizations.
+- [ ] Create presentation.
+- [ ] Write paper.
 
-|   Variable    |               Definition                |
-|:-------------:|:---------------------------------------:|
-|  `ShellType`  |   Type of shell                         |
-|   `Width`     |   Width of the shell                    |
-|   `Length`    |   Length of the shell                   |
-|   `AperHt`    |   Apertural Height                      |
-|   `AperWdt`   |   Apertural Width                       |
-|   `LU`        |   Unknown                               |
-|   `LipWdt`    |   Measures the apertural lip thickness  |
+</br>
+
+---
+
+Chow:
+- [ ] (🛠️ in progress...)
