@@ -1,31 +1,36 @@
-# STAT-387 Final Project
+h1 align="center"> Endemic Gastropods Data Analysis </h1>
 
 ## File Organization 
-.
-└── STAT387_FinalProject
-    ├── data/
-    │   ├── raw
-    │   │   ├── snail.csv
-    │   └── processed
-    │       ├── snail.RData
-    │       ├── snail1.RData
-    │       └── snail2.RData
-    ├── etc/
-    │   ├── AGENDA.md
-    │   ├── Johnston_and_Cohen_1986_Palaios.pdf
-    │   ├── notes.txt
-    │   ├── Project-2.pdf
-    │   ├── variable_definitions.png
-    │   └── variable_definitions2.png
-    ├── output/
-    │   ├── figures/
-    │   ├── FinalPaper.Rmd
-    │   ├── FinalPresentation
-    │   └── plots/
-    ├── src/
-    ├── README.md
-    └── .gitignore
 
+```
+ 📦STAT387_FinalProject      
+ ┣ 📂lib                                        // Supplementary materials
+ ┃ ┣ 📄AGENDA.md                                // Current project objectives 
+ ┃ ┣ 📄Johnston_and_Cohen_1986_Palaios.pdf      // Data context source
+ ┃ ┣ 📄notes.txt                                // Potential inquiry goals
+ ┃ ┣ 📄variable_definitions.png                 // Variable source definitions
+ ┃ ┗ 📄variable_definitions2.png                // Expanded variable source definitions
+ ┣ 📂src                                        // Source code
+ ┃ ┣ 📂data                                     // Source Data 
+ ┃ ┃ ┣ 📂raw                                    // Preprocessed data
+ ┃ ┃ ┃ ┗ 📄snail.csv                            // Original data
+ ┃ ┃ ┗ 📂processed                              // Analyzed data
+ ┃ ┃   ┣ 📄snail.RData                          // Re-formatted original data 
+ ┃ ┃   ┣ 📄snail1.RData                         // `Type1` data from `ShellType` variable 
+ ┃ ┃   ┗ 📄snail2.RData                         // `Type2` data from `ShellType` variable 
+ ┃ ┣ 📂exploration.Rmd                          // Exploratory data analysis code            
+ ┃ ┣ 📂exp_snails1.Rmd                          // `Type1` Exploratory data analysis code
+ ┃ ┣ 📂exp_snails2.Rmd                          // `Type2` Exploratory data analysis code
+ ┃ ┣ 📄FinalPaper.Rmd                           // RMarkdown file to create final paper
+ ┃ ┣ 📄Complete_Code.R                          // Instructor desired R script 
+ ┃ ┗ 📄outputs                                  // Visualizations
+ ┃   ┣ 📂figures                                // Infographics
+ ┃   ┣ 📂FinalPaper.pdf                         // RMarkdown final paper output
+ ┃   ┣ 📂FinalPresentation                      // Slides for presentation
+ ┃   ┗ 📂plots                                  // Graphs
+ ┣ 📄.gitignore                                 
+ ┗ 📄README.md
+```
 ## Preamble:
 Consider the snail data available in the `Snail2.csv`. Take Length as the response variable and we would like to understand how it is related with other variables in the data.
 
