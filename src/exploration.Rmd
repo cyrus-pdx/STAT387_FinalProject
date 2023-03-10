@@ -123,13 +123,13 @@ sd(snails2$Length)
 ```
 
 ```{r}
-# Finding the standard deviation for the snails Length variable 
+# Finding the variance for the snails Length variable 
 var(snails$Length)
 
-# Finding the standard deviation for the snails1 Length variable 
+# Finding the variance for the snails1 Length variable 
 var(snails1$Length)
 
-# Finding the standard deviation for the snails2 Length variable 
+# Finding the variance for the snails2 Length variable 
 var(snails2$Length)
 ```
 
@@ -137,12 +137,24 @@ var(snails2$Length)
 
 ```{r}
 ggplot(snails) + 
-  geom_point(aes(x=1:nrow(snails), y=Length, colour = ShellType))
+  geom_point(aes(x=1:nrow(snails), y=Length, colour = ShellType)) +
+  ggtitle("Shell Type Lengths") +
+  xlab("Index")
+```
+
+
+```{r}
+png("outputs/plots/snails_ShellType.png")
+ggplot(snails) + 
+  geom_point(aes(x=1:nrow(snails), y=Length, colour = ShellType)) +
+  ggtitle("Shell Type Lengths") +
+  xlab("Index")
+dev.off()
 ```
 
 ```{r}
 ggplot(snails1) + 
-  geom_point(aes(x=1:nrow(snails1), y=Length, colour = ShellType))
+  geom_point(aes(x=1:nrow(snails1), y=Length, colour = ShellType)) 
 ```
 
 ```{r}
@@ -150,7 +162,43 @@ ggplot(snails2) +
   geom_point(aes(x=1:nrow(snails2), y=Length))
 ```
 
-**OBSERVATIONS: ** It might be beneficial to break the 
+```{r}
+ggplot(snails) + 
+  geom_point(aes(x=1:nrow(snails), y=Width, colour = ShellType)) +
+  ggtitle("Shell Type AperHt") +
+  xlab("Index")
+```
+
+```{r}
+ggplot(snails) + 
+  geom_point(aes(x=1:nrow(snails), y=AperHt, colour = ShellType)) +
+  ggtitle("Shell Type AperHt") +
+  xlab("Index")
+```
+
+```{r}
+ggplot(snails) + 
+  geom_point(aes(x=1:nrow(snails), y=AperWdt, colour = ShellType)) +
+  ggtitle("Shell Type AperWdt") +
+  xlab("Index")
+```
+
+```{r}
+ggplot(snails) + 
+  geom_point(aes(x=1:nrow(snails), y=LU, colour = ShellType)) +
+  ggtitle("Shell Type LU") +
+  xlab("Index")
+```
+
+```{r}
+ggplot(snails) + 
+  geom_point(aes(x=1:nrow(snails), y=LipWdt, colour = ShellType)) +
+  ggtitle("Shell Type LipWdt") +
+  xlab("Index")
+```
+
+**OBSERVATIONS: ** It might be beneficial to conduct a clustering analysis of the data. The data could potentially indicate that the samples were collected at multiple sites and other variables may be more deterministic regarding endemic gastropods species flock formation. 
+
 
 ```{r}
 pairs(snails[,-1])
@@ -179,9 +227,12 @@ pairs(snails_new[,-1])
 corrplot(cor(snails_new[,-1]), method="square")
 ```
 
+
+
 ```{r}
 boxplot(snails_new[,-1])
 ```
+
 
 ```{r}
 view(snails)
