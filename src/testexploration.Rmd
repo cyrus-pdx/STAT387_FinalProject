@@ -1,0 +1,251 @@
+---
+title: "Exploration"
+author: "Cyrus Cravens"
+date: "Due: 21 FEB 23 at 12:00"
+output:
+  html_document:
+  latex_engine: xelatex
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T)
+library(tidyverse)  # Load core packages: 
+                    # ggplot2,   for data visualization.
+                    # dplyr,     for data manipulation.
+                    # tidyr,     for data tidying.
+                    # purrr,     for functional programming.
+                    # tibble,    for tibbles, a modern re-imagining of data frames.
+                    # stringr,   for strings.
+                    # forcats,   for factors.
+                    # lubridate, for date/times.
+                    # readr,     for reading .csv, .tsv, and .fwf files.
+                    # readxl,    for reading .xls, and .xlxs files.
+                    # feather,   for sharing with Python and other languages.
+                    # haven,     for SPSS, SAS and Stata files.
+                    # httr,      for web apis.
+                    # jsonlite   for JSON.
+                    # rvest,     for web scraping.
+                    # xml2,      for XML.
+                    # modelr,    for modelling within a pipeline
+                    # broom,     for turning models into tidy data
+                    # hms,       for times.
+library(magrittr)   # Pipeline operator
+library(lobstr)     # Visualizing abstract syntax trees, stack trees, and object sizes
+library(pander)     # Exporting/converting complex pandoc documents, EX: df to Pandoc table
+library(ggforce)    # More plot functions on top of ggplot2
+library(ggpubr)     # Automatically add p-values and significance levels  plots.
+                    # Arrange and annotate multiple plots on the same page. 
+                    # Change graphical parameters such as colors and labels.
+library(sf)         # Geo-spatial vector manipulation: points, lines, polygons
+library(kableExtra) # Generate 90 % of complex/advanced/self-customized/beautiful tables
+library(latex2exp)  # Latex axis titles in ggplot2
+library(ellipse)    # Simultaneous confidence interval region to check C.I. of 2 slope parameters
+library(plotly)     # User interactive plots
+library(ellipse)    # Simultaneous confidence interval region to check C.I. of 2 regressors
+library(olsrr)      # Model selections
+library(leaps)      # Regression subsetting
+library(pls)        # Partial Least squares
+library(MASS)       # LDA, QDA, OLS, Ridge Regression, Box-Cox, stepAIC, etc,.
+library(stats)      # functions for statistical calculations and random number generation.
+library(corrplot)   # 	Visualization of a Correlation Matrix
+library(class)      # Various functions for classification
+library(classifly)  # Explore Classification Models in High Dimensions
+library(classmap)   # Visualizing Classification Results
+library(knitr)
+knitr::opts_chunk$set(error = TRUE)
+set.seed(1)        # make random results reproducible
+current_dir <- getwd()
+if (!is.null(current_dir)) {
+  setwd(current_dir)
+  remove(current_dir)
+}
+```
+
+```{r}
+snails <- read_csv("Snail2.csv")
+snails
+```
+
+```{r}
+colSums(is.na(snails))
+```
+
+**NOTE:** There is are no `NA` values
+
+```{r}
+unique(snails$ShellType)
+```
+
+**NOTE:** There is a categorical variable with records that are either `Type1` or `Type2`.
+
+```{r}
+snails %>% 
+  group_by(ShellType) %>% 
+  count(ShellType) %>% 
+  rename(Totals = n)
+```
+**NOTE:** There are significantly more `Type2` than `Type1` shells. This could potentially cause the data to be biased towards `Type2` shell types.
+
+```{r}
+summary(snails)
+```
+
+**NOTE:** `Length` values range from 9.63 to 18.39, Q1 = 12.88 $\mu$ = 13.94, Median = 13.79, Q3 = 14.96
+
+```{r}
+snails1 <- snails %>% filter(ShellType == "Type1")
+summary(snails1)
+```
+
+```{r}
+snails2 <- snails %>% filter(ShellType == "Type2")
+summary(snails2)
+```
+
+**NOTE:** `snail2` MIN and MAX for the `Length` variable are closer to the mean and median, which might suggest less outliers. 
+
+```{r}
+# Finding the standard deviation for the snails Length variable 
+sd(snails$Length)
+# Finding the standard deviation for the snails1 Length variable 
+sd(snails1$Length)
+# Finding the standard deviation for the snails2 Length variable 
+sd(snails2$Length)
+```
+
+```{r}
+# Finding the standard deviation for the snails Length variable 
+var(snails$Length)
+# Finding the standard deviation for the snails1 Length variable 
+var(snails1$Length)
+# Finding the standard deviation for the snails2 Length variable 
+var(snails2$Length)
+```
+
+**NOTE:** $\sigma^{2}$ for `snail2` `Length` variable are smaller. 
+
+```{r}
+ggplot(snails) + 
+  geom_point(aes(x=1:nrow(snails), y=Length, colour = ShellType))
+```
+
+```{r}
+ggplot(snails1) + 
+  geom_point(aes(x=1:nrow(snails1), y=Length, colour = ShellType))
+```
+
+```{r}
+ggplot(snails2) + 
+  geom_point(aes(x=1:nrow(snails2), y=Length))
+```
+
+**OBSERVATIONS: ** It might be beneficial to break the 
+
+```{r}
+pairs(snails[,-1])
+```
+
+```{r}
+corrplot(cor(snails[,-1]), method="square")
+```
+
+```{r}
+boxplot(snails[,-1])
+```
+
+```{r}
+snails_new <- snails %>% 
+  mutate(Type = ifelse(ShellType == "Type1", 1 , 2)) %>% 
+  relocate(Type, .after = ShellType)
+snails_new
+```
+
+```{r}
+pairs(snails_new[,-1])
+```
+
+```{r}
+corrplot(cor(snails_new[,-1]), method="square")
+```
+
+```{r}
+boxplot(snails_new[,-1])
+```
+
+```{r}
+view(snails)
+```
+
+### Question c)
+```{r}
+lmod_1 <- lm(Length ~ ShellType, snails)
+lmod_2 <- lm(Length ~ Width, snails)
+lmod_3 <- lm(Length ~ AperHt, snails)
+lmod_4 <- lm(Length ~ AperWdt, snails)
+lmod_5 <- lm(Length ~ LU, snails)
+lmod_6 <- lm(Length ~ LipWdt, snails)
+lmod_7 <- lm(Length ~ Type, snails_new)
+```
+
+```{r}
+summary(lmod_1)
+```
+```{r}
+plot(lmod_1)
+```
+
+```{r}
+summary(lmod_2)
+```
+```{r}
+plot(lmod_2)
+```
+
+```{r}
+summary(lmod_3)
+```
+
+```{r}
+plot(lmod_3)
+```
+
+```{r}
+summary(lmod_4)
+```
+```{r}
+plot(lmod_4)
+```
+
+```{r}
+summary(lmod_5)
+```
+```{r}
+plot(lmod_5)
+```
+
+```{r}
+summary(lmod_6)
+```
+```{r}
+plot(lmod_6)
+```
+```{r}
+summary(lmod_7)
+```
+
+```{r}
+plot(lmod_7)
+```
+
+### Question d)
+
+```{r}
+lmod_length <- lm(Length ~ ., snails )
+summary(lmod_length)
+```
+**OBSERVATIONS: ** 
+1. Predictors with p-value < 0.05 are AperHt and LU
+2. Predictors with p-value > 0.05 are ShellType, Width, AperWdt, LipWdt
+Therefore, we can reject the Null Hypothesis for ShellType, Width, AperWdt, LipWdt.
+
+
