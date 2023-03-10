@@ -69,7 +69,7 @@ if (!is.null(current_dir)) {
 ```
 
 ```{r}
-snails <- read_csv("Snail2.csv")
+snails <- read_csv("data/raw/Snail2.csv")
 snails
 ```
 
