@@ -162,28 +162,7 @@ plot(lmod_6)
 lmod_length <- lm(Length ~ ., snails )
 summary(lmod_length)
 ```
-
-```{r}
-lmod_width <- lm(Width ~ ., snails )
-summary(lmod_width)
-```
-
-```{r}
-lmod_AperHt <- lm(AperHt ~ ., snails )
-summary(lmod_AperHt)
-```
-
-```{r}
-lmod_AperWdt <- lm(AperWdt ~ ., snails)
-summary(lmod_AperWdt)
-```
-
-```{r}
-lmod_LU <- lm(LU ~ ., snails )
-summary(lmod_LU)
-```
-
-```{r}
-lmod_LipWdt <- lm(LipWdt ~ ., snails )
-summary(lmod_LipWdt)
-```
+**OBSERVATIONS: ** 
+1. Predictors with p-value < 0.05 are AperHt and LU
+2. Predictors with p-value > 0.05 are ShellType, Width, AperWdt, LipWdt
+Therefore, we can reject the Null Hypothesis for ShellType, Width, AperWdt, LipWdt.
