@@ -1,0 +1,189 @@
+---
+title: "Exploration"
+author: "Cyrus Cravens"
+date: "Due: 21 FEB 23 at 12:00"
+output:
+  html_document:
+  latex_engine: xelatex
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T)
+
+library(tidyverse)  # Load core packages: 
+                    # ggplot2,   for data visualization.
+                    # dplyr,     for data manipulation.
+                    # tidyr,     for data tidying.
+                    # purrr,     for functional programming.
+                    # tibble,    for tibbles, a modern re-imagining of data frames.
+                    # stringr,   for strings.
+                    # forcats,   for factors.
+                    # lubridate, for date/times.
+                    # readr,     for reading .csv, .tsv, and .fwf files.
+                    # readxl,    for reading .xls, and .xlxs files.
+                    # feather,   for sharing with Python and other languages.
+                    # haven,     for SPSS, SAS and Stata files.
+                    # httr,      for web apis.
+                    # jsonlite   for JSON.
+                    # rvest,     for web scraping.
+                    # xml2,      for XML.
+                    # modelr,    for modelling within a pipeline
+                    # broom,     for turning models into tidy data
+                    # hms,       for times.
+
+library(magrittr)   # Pipeline operator
+library(lobstr)     # Visualizing abstract syntax trees, stack trees, and object sizes
+library(pander)     # Exporting/converting complex pandoc documents, EX: df to Pandoc table
+library(ggforce)    # More plot functions on top of ggplot2
+library(ggpubr)     # Automatically add p-values and significance levels  plots.
+                    # Arrange and annotate multiple plots on the same page. 
+                    # Change graphical parameters such as colors and labels.
+library(sf)         # Geo-spatial vector manipulation: points, lines, polygons
+library(kableExtra) # Generate 90 % of complex/advanced/self-customized/beautiful tables
+library(latex2exp)  # Latex axis titles in ggplot2
+library(ellipse)    # Simultaneous confidence interval region to check C.I. of 2 slope parameters
+library(plotly)     # User interactive plots
+
+library(ellipse)    # Simultaneous confidence interval region to check C.I. of 2 regressors
+library(olsrr)      # Model selections
+library(leaps)      # Regression subsetting
+library(pls)        # Partial Least squares
+library(MASS)       # LDA, QDA, OLS, Ridge Regression, Box-Cox, stepAIC, etc,.
+library(stats)      # functions for statistical calculations and random number generation.
+library(corrplot)   # 	Visualization of a Correlation Matrix
+library(class)      # Various functions for classification
+library(classifly)  # Explore Classification Models in High Dimensions
+library(classmap)   # Visualizing Classification Results
+library(knitr)
+
+knitr::opts_chunk$set(error = TRUE)
+
+set.seed(1)        # make random results reproducible
+
+current_dir <- getwd()
+
+if (!is.null(current_dir)) {
+  setwd(current_dir)
+  remove(current_dir)
+}
+```
+
+```{r}
+snails <- read_csv("Snail2.csv")
+snails
+```
+
+```{r}
+unique(snails$ShellType)
+```
+
+
+```{r}
+summary(snails)
+```
+
+```{r}
+pairs(snails[,-1])
+```
+
+
+```{r}
+corrplot(cor(snails[,-1]), method="square")
+```
+
+```{r}
+boxplot(snails[,-1])
+```
+
+
+
+```{r}
+view(snails)
+```
+
+
+### Question c)
+```{r}
+lmod_1 <- lm(Length ~ ShellType, snails)
+lmod_2 <- lm(Length ~ Width, snails)
+lmod_3 <- lm(Length ~ AperHt, snails)
+lmod_4 <- lm(Length ~ AperWdt, snails)
+lmod_5 <- lm(Length ~ LU, snails)
+lmod_6 <- lm(Length ~ LipWdt, snails)
+```
+
+```{r}
+summary(lmod_1)
+```
+```{r}
+plot(lmod_1)
+```
+
+```{r}
+summary(lmod_2)
+```
+```{r}
+plot(lmod_2)
+```
+
+```{r}
+summary(lmod_3)
+```
+
+```{r}
+plot(lmod_3)
+```
+
+```{r}
+summary(lmod_4)
+```
+```{r}
+plot(lmod_4)
+```
+
+```{r}
+summary(lmod_5)
+```
+```{r}
+plot(lmod_5)
+```
+
+```{r}
+summary(lmod_6)
+```
+```{r}
+plot(lmod_6)
+```
+
+
+### Question d)
+
+```{r}
+lmod_length <- lm(Length ~ ., snails )
+summary(lmod_length)
+```
+
+```{r}
+lmod_width <- lm(Width ~ ., snails )
+summary(lmod_width)
+```
+
+```{r}
+lmod_AperHt <- lm(AperHt ~ ., snails )
+summary(lmod_AperHt)
+```
+
+```{r}
+lmod_AperWdt <- lm(AperWdt ~ ., snails)
+summary(lmod_AperWdt)
+```
+
+```{r}
+lmod_LU <- lm(LU ~ ., snails )
+summary(lmod_LU)
+```
+
+```{r}
+lmod_LipWdt <- lm(LipWdt ~ ., snails )
+summary(lmod_LipWdt)
+```
