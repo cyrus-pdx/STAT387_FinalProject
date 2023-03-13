@@ -80,6 +80,8 @@ unique(snails$ShellType)
 
 ```{r}
 summary(snails)
+snails$ShellType <- factor(snails$ShellType)
+str(snails)
 ```
 
 ```{r}
@@ -163,6 +165,23 @@ lmod_length <- lm(Length ~ ., snails )
 summary(lmod_length)
 ```
 **OBSERVATIONS: ** 
-1. Predictors with p-value < 0.05 are AperHt and LU
-2. Predictors with p-value > 0.05 are ShellType, Width, AperWdt, LipWdt
+1. Predictors with p-value < 0.05 are AperHt and LU\
+2. Predictors with p-value > 0.05 are ShellType, Width, AperWdt, LipWdt\
 Therefore, we can reject the Null Hypothesis for ShellType, Width, AperWdt, LipWdt.
+```{r}
+#snails$ShellType <- ifelse(snails$ShellType=="Type1", 1,0)
+
+sapply(snails, class)
+class(snails$ShellType)
+set.seed(1)
+
+sample <- sample(c(TRUE, FALSE), nrow(snails), replace=TRUE, prob=c(0.8,0.2))
+train  <- snails[sample, ]
+test   <- snails[!sample, ]
+```
+
+```{r}
+lmod <- lm(Length~., data = train)
+summary(lmod)
+```
+
