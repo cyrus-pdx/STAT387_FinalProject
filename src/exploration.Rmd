@@ -164,12 +164,11 @@ plot(lmod_6)
 lmod_length <- lm(Length ~ ., snails )
 summary(lmod_length)
 ```
-**OBSERVATIONS: ** 
+**OBSERVATIONS: ** \
 1. Predictors with p-value < 0.05 are AperHt and LU\
 2. Predictors with p-value > 0.05 are ShellType, Width, AperWdt, LipWdt\
 Therefore, we can reject the Null Hypothesis for ShellType, Width, AperWdt, LipWdt.
 ```{r}
-#snails$ShellType <- ifelse(snails$ShellType=="Type1", 1,0)
 
 sapply(snails, class)
 class(snails$ShellType)
@@ -183,5 +182,53 @@ test   <- snails[!sample, ]
 ```{r}
 lmod <- lm(Length~., data = train)
 summary(lmod)
+lmod1 <- lm(Length~AperHt+LU,data = train)
+summary(lmod1)
 ```
+```{r}
+pred.lm <- predict(lmod, test)
+MSE_lm = mean((pred.lm - test$Length)^2)
+MSE_lm
+pred.lm <- predict(lmod1, test)
+MSE_lm1 = mean((pred.lm - test$Length)^2)
+MSE_lm1
+```
+
+
+```{r}
+library(pls)
+plsmod <- plsr(Length~ ., data = train, scale = TRUE, validation = "LOO")
+validationplot(plsmod, val.type = "MSEP")
+plsmod1 <- plsr(Length~ AperHt+LU, data = train, scale =TRUE, validation = "LOO")
+validationplot(plsmod1, val.type = "MSEP")
+```
+
+```{r}
+pred.pls <- predict(plsmod, test, ncomp = 6)
+MSE_pls = mean((pred.pls - test$Length)^2)
+MSE_pls
+pred.pls1 <- predict(plsmod1, test, ncomp = 2)
+MSE_pls1 = mean((pred.pls1 - test$Length)^2)
+MSE_pls1
+```
+```{r}
+newdata_tp1 <- data.frame(ShellType = factor("Type1",levels = c("Type1", "Type2")),
+                      Width = mean(snails$Width), 
+                      AperHt = mean(snails$AperHt), 
+                      AperWdt = mean(snails$AperWdt), 
+                      LU = mean(snails$LU), 
+                      LipWdt = mean(snails$LipWdt))
+newdata_tp2 <- data.frame(ShellType = factor("Type2",levels = c("Type1", "Type2")),
+                      Width = mean(snails$Width), 
+                      AperHt = mean(snails$AperHt), 
+                      AperWdt = mean(snails$AperWdt), 
+                      LU = mean(snails$LU), 
+                      LipWdt = mean(snails$LipWdt))
+```
+
+```{r}
+predict(lmod, newdata = newdata_tp1)
+predict(lmod, newdata = newdata_tp2)
+```
+
 
